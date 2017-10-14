@@ -1,6 +1,7 @@
 package com.istic.m1.tp.editeur.ihm;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.*;
 
@@ -68,9 +69,13 @@ public class MonIHM extends JFrame{
 		
 		//Ajout au panneau
 		panneauPrincipal.setLayout(new BorderLayout());
-		zoneDeSaisie.setSize(Data.width, Data.height);
+		zoneDeSaisie.setLineWrap(true);  //Aller automatiquement à la ligne
+		zoneDeNotification.setBackground(Color.LIGHT_GRAY);
+		
 		
 		panneauPrincipal.add(zoneDeSaisie,BorderLayout.CENTER);
+		panneauPrincipal.add(zoneDeNotification,BorderLayout.SOUTH);
+		
 		this.setContentPane(panneauPrincipal);
 		
 		
@@ -98,8 +103,8 @@ public class MonIHM extends JFrame{
 		menuFermer=new JMenuItem("Fermer");
 		menuEnregistrer=new JMenuItem("Enregistrer");
 		
-		zoneDeSaisie = new JTextArea();
-		zoneDeNotification=new JTextArea();
+		zoneDeSaisie = new JTextArea("",10,10);
+		zoneDeNotification=new JTextArea("",15,1);
 	}
 
 
