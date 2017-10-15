@@ -16,7 +16,7 @@ public class MonIHM extends JFrame{
 
 	//Les JPanel pour gerer la mis en page de l'interface
 	private JPanel panneauPrincipal;
-	
+
 
 	//Les JMenuItem pour les bouton
 	private JMenuItem menuCopier;
@@ -24,15 +24,15 @@ public class MonIHM extends JFrame{
 	private JMenuItem menuColler;
 	private JMenuItem menuFermer;
 	private JMenuItem menuEnregistrer;
-	
+
 	/***********FIN MENU**************/
-	
+
 	//Les composants de la fenêtres
 	private JTextArea zoneDeSaisie;
 	private JTextArea zoneDeNotification;
-	
-	
-	
+
+
+
 	/*
 	private JMenuItem menuCopier;*/
 
@@ -60,31 +60,33 @@ public class MonIHM extends JFrame{
 		menuEdition.add(menuCopier);
 		menuEdition.add(menuCouper);
 		menuEdition.add(menuColler);
-		
+
 		//placement du Menu
 		barre_de_menu.add(menuFichier);
 		barre_de_menu.add(menuEdition);
 		this.setJMenuBar(barre_de_menu);
-				
-		
+
+
+
+
+
 		//Ajout au panneau
 		panneauPrincipal.setLayout(new BorderLayout());
 		zoneDeSaisie.setLineWrap(true);  //Aller automatiquement à la ligne
 		zoneDeNotification.setBackground(Color.LIGHT_GRAY);
-		
-		
+
+
 		panneauPrincipal.add(zoneDeSaisie,BorderLayout.CENTER);
 		panneauPrincipal.add(zoneDeNotification,BorderLayout.SOUTH);
-		
+
 		this.setContentPane(panneauPrincipal);
-		
-		
-		
-		//Le corps
+
+	}
 
 
-
-
+	public void run()
+	{
+		this.setVisible(true);
 	}
 
 
@@ -102,7 +104,7 @@ public class MonIHM extends JFrame{
 		menuColler=new JMenuItem("Coller");
 		menuFermer=new JMenuItem("Fermer");
 		menuEnregistrer=new JMenuItem("Enregistrer");
-		
+
 		zoneDeSaisie = new JTextArea("",10,10);
 		zoneDeNotification=new JTextArea("",15,1);
 	}
