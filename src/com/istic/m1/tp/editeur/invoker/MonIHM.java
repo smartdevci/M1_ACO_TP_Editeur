@@ -341,6 +341,7 @@ public class MonIHM extends JFrame implements Observable, Observer{
 			@Override
 			public void caretUpdate(CaretEvent c) {
 				notifyAllObserver(getZoneDeSaisie().getSelectionStart(),getZoneDeSaisie().getSelectionEnd(),presse_papier,getZoneDeSaisie().getText());
+				localUpdate(getZoneDeSaisie().getSelectionStart(), getZoneDeSaisie().getSelectionEnd());
 			}
 
 		});
@@ -412,16 +413,37 @@ public class MonIHM extends JFrame implements Observable, Observer{
 	 */
 	@Override
 	public void update(int debut_selection, int fin_selection, String presse_papier, String buffer) {
-		
+
 		this.debut_selection=debut_selection;
 		this.fin_selection=fin_selection;
 		this.presse_papier=presse_papier;
 
-		
 		//SwingUtilities.invokeLater(updateIHM);
 		this.getZoneDeSaisie().setText(buffer);
 		this.getZoneDeSaisie().setCaretPosition(debut_selection);
 		this.getZoneDeSaisie().select(debut_selection, fin_selection);
+
+		//Update notification zone
+		this.getZoneDeNotification().setText(
+				details1+presse_papier+"\n"+
+				details2+this.getZoneDeSaisie().getText()+"\n"+
+				details3+debut_selection+"\n"+
+				details4+fin_selection+"\n");
+
+
+		//this.enableDesable();
+	}
+
+	
+	
+	public void localUpdate(int debut_selection, int fin_selection) {
+
+		this.debut_selection=debut_selection;
+		this.fin_selection=fin_selection;
+		
+		//SwingUtilities.invokeLater(updateIHM);
+		//this.getZoneDeSaisie().setCaretPosition(debut_selection);
+		//this.getZoneDeSaisie().select(debut_selection, fin_selection);
 
 		//Update notification zone
 		this.getZoneDeNotification().setText(
