@@ -4,18 +4,18 @@ import com.istic.m1.tp.editeur.commande.Command;
 import com.istic.m1.tp.editeur.receiver.MoteurEdition;
 import com.istic.m1.tp.editeur.receiver.MoteurEditionImpl;
 
-public class Coller implements Command{
+public class Selectionner implements Command{
 
 	MoteurEdition moteur;
 
-	public Coller(MoteurEdition m) {
+	public Selectionner(MoteurEdition moteur) {
 		super();
-		this.moteur = m;
+		this.moteur = moteur;
 	}
 
 	@Override
 	public void execute() {
-		moteur.coller();
+		moteur.selectionner();
 	}
 
 }

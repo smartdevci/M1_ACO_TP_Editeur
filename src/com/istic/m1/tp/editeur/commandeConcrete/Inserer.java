@@ -4,18 +4,32 @@ import com.istic.m1.tp.editeur.commande.Command;
 import com.istic.m1.tp.editeur.receiver.MoteurEdition;
 import com.istic.m1.tp.editeur.receiver.MoteurEditionImpl;
 
-public class Coller implements Command{
+public class Inserer implements Command{
 
 	MoteurEdition moteur;
+	private String texte;
 
-	public Coller(MoteurEdition m) {
+
+
+	public Inserer(MoteurEdition moteur) {
 		super();
-		this.moteur = m;
+		this.moteur = moteur;
 	}
+
+
+	public String getTexte() {
+		return texte;
+	}
+
+
+	public void setTexte(String texte) {
+		this.texte = texte;
+	}
+
 
 	@Override
 	public void execute() {
-		moteur.coller();
+		moteur.insererTexte(texte);
 	}
 
 }
