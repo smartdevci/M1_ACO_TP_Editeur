@@ -36,6 +36,8 @@ public class MonIHM extends JFrame implements Observable, Observer{
 	private static final String details3="DEBUT SELECTION : ";
 	private static final String details4="FIN SELECTION : ";
 	int i=0;
+	
+	public boolean publique=false;
 
 
 
@@ -46,6 +48,7 @@ public class MonIHM extends JFrame implements Observable, Observer{
 	private int debut_selection, fin_selection;
 	private String presse_papier;
 
+	
 	//String buffer;
 
 	//La barre de menu
@@ -66,6 +69,27 @@ public class MonIHM extends JFrame implements Observable, Observer{
 	private JMenuItem menuSelectionnerTout;
 	private JMenuItem menuFermer;
 	private JMenuItem menuEnregistrer;
+
+	//La barre d'outil
+	private JToolBar barreOutils;
+	private JButton boutonOutilEnregistrer;
+	private JButton boutonOutilCouper;
+	private JButton boutonOutilCopier;
+	private JButton boutonOutilColler;
+	private JButton boutonOutilPrecedent;
+	private JButton boutonOutilSuivant;
+	private JButton boutonOutilZoomOut;
+	private JButton boutonOutilZoomIn;
+	private JButton boutonOutilRecord;
+	private JButton boutonOutilPlay;
+	private JButton boutonOutilStop;
+	private JButton boutonOutilPause;
+	private JButton boutonOutilHelp;
+	
+	
+
+
+
 
 	/***********FIN MENU**************/
 
@@ -114,6 +138,45 @@ public class MonIHM extends JFrame implements Observable, Observer{
 		barre_de_menu.add(menuEdition);
 		this.setJMenuBar(barre_de_menu);
 
+		//Barre d'outil
+		barreOutils=new JToolBar(SwingConstants.HORIZONTAL);
+		barreOutils.setFloatable(false);
+		barreOutils.setRollover(true);
+
+		boutonOutilCopier.setToolTipText("Copier le texte");
+		boutonOutilCouper.setToolTipText("Couper le texte");
+		boutonOutilColler.setToolTipText("Coller le texte");
+		boutonOutilEnregistrer.setToolTipText("Enregistrer dans un fichier");
+		boutonOutilPrecedent.setToolTipText("Revenir en arrière");
+		boutonOutilSuivant.setToolTipText("Aller en avant");
+		boutonOutilZoomOut.setToolTipText("Dezoommer ");
+		boutonOutilZoomIn.setToolTipText("Zoommer");
+		boutonOutilRecord.setToolTipText("Enregistrer les commandes");
+		boutonOutilPlay.setToolTipText("Rejouer les commandes");
+		boutonOutilPause.setToolTipText("Pause");
+		boutonOutilStop.setToolTipText("Arreter la lecture");
+		boutonOutilHelp.setToolTipText("A propos");
+
+		barreOutils.add(boutonOutilEnregistrer);
+		barreOutils.add(boutonOutilCouper);
+		barreOutils.add(boutonOutilCopier);
+		barreOutils.add(boutonOutilColler);
+		barreOutils.add(new JToolBar.Separator());
+		barreOutils.add(boutonOutilRecord);
+		barreOutils.add(boutonOutilPlay);
+		barreOutils.add(boutonOutilPause);
+		barreOutils.add(boutonOutilStop);
+		barreOutils.add(new JToolBar.Separator());
+		barreOutils.add(boutonOutilPrecedent);
+		barreOutils.add(boutonOutilSuivant);
+		barreOutils.add(new JToolBar.Separator());
+		barreOutils.add(boutonOutilZoomOut);
+		barreOutils.add(boutonOutilZoomIn);
+		barreOutils.add(boutonOutilHelp);
+		
+
+
+
 
 
 
@@ -121,11 +184,14 @@ public class MonIHM extends JFrame implements Observable, Observer{
 		//Ajout au panneau
 		panneauPrincipal.setLayout(new BorderLayout());
 		zoneDeSaisie.setLineWrap(true);  //Aller automatiquement à la ligne
+		zoneDeNotification.setLineWrap(true);
 		zoneDeNotification.setBackground(Color.LIGHT_GRAY);
 
-
+		if(!publique)panneauPrincipal.add(barreOutils,BorderLayout.NORTH);
 		panneauPrincipal.add(zoneDeSaisie,BorderLayout.CENTER);
 		panneauPrincipal.add(zoneDeNotification,BorderLayout.SOUTH);
+
+
 
 		this.setContentPane(panneauPrincipal);
 
@@ -275,6 +341,21 @@ public class MonIHM extends JFrame implements Observable, Observer{
 		menuSelectionnerTout=new JMenuItem(" Tout selectionner");
 		menuEnregistrer=new JMenuItem("Enregistrer");
 
+		boutonOutilCopier=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\copy.png"));
+		boutonOutilCouper=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\cut.png"));
+		boutonOutilColler=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\paste.png"));
+		boutonOutilEnregistrer=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\save.png"));
+		boutonOutilPrecedent=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\undo.png"));
+		boutonOutilSuivant=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\redo.png"));
+		boutonOutilZoomOut=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\zoom-out.png"));
+		boutonOutilZoomIn=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\zoom-in.png"));
+		boutonOutilRecord=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\record.png"));
+		boutonOutilStop=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\stop.png"));
+		boutonOutilPlay=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\play.png"));
+		boutonOutilPause=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\pause.png"));
+		boutonOutilHelp=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\help.png"));
+
+
 		zoneDeSaisie = new JTextArea("",10,10);
 		zoneDeNotification=new JTextArea("",15,1);
 
@@ -341,7 +422,15 @@ public class MonIHM extends JFrame implements Observable, Observer{
 			@Override
 			public void caretUpdate(CaretEvent c) {
 				notifyAllObserver(getZoneDeSaisie().getSelectionStart(),getZoneDeSaisie().getSelectionEnd(),presse_papier,getZoneDeSaisie().getText());
-				localUpdate(getZoneDeSaisie().getSelectionStart(), getZoneDeSaisie().getSelectionEnd());
+
+				debut_selection=getZoneDeSaisie().getSelectionStart();
+				fin_selection=getZoneDeSaisie().getSelectionEnd();
+
+				getZoneDeNotification().setText(
+						details1+presse_papier+"\n"+
+						details2+getZoneDeSaisie().getText()+"\n"+
+						details3+debut_selection+"\n"+
+						details4+fin_selection+"\n");
 			}
 
 		});
@@ -434,27 +523,9 @@ public class MonIHM extends JFrame implements Observable, Observer{
 		//this.enableDesable();
 	}
 
-	
-	
-	public void localUpdate(int debut_selection, int fin_selection) {
-
-		this.debut_selection=debut_selection;
-		this.fin_selection=fin_selection;
-		
-		//SwingUtilities.invokeLater(updateIHM);
-		//this.getZoneDeSaisie().setCaretPosition(debut_selection);
-		//this.getZoneDeSaisie().select(debut_selection, fin_selection);
-
-		//Update notification zone
-		this.getZoneDeNotification().setText(
-				details1+presse_papier+"\n"+
-				details2+this.getZoneDeSaisie().getText()+"\n"+
-				details3+debut_selection+"\n"+
-				details4+fin_selection+"\n");
 
 
-		//this.enableDesable();
-	}
+
 
 
 
