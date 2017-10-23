@@ -3,6 +3,7 @@ package com.istic.m1.tp.editeur.invoker;
 import java.awt.BorderLayout;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -35,8 +36,8 @@ public class MonIHM extends JFrame implements Observable, Observer{
 	private static final String details2="BUFFER : ";
 	private static final String details3="DEBUT SELECTION : ";
 	private static final String details4="FIN SELECTION : ";
-	int i=0;
 	
+	private int tailleTexte;
 	public boolean publique=false;
 
 
@@ -48,7 +49,7 @@ public class MonIHM extends JFrame implements Observable, Observer{
 	private int debut_selection, fin_selection;
 	private String presse_papier;
 
-	
+
 	//String buffer;
 
 	//La barre de menu
@@ -85,8 +86,9 @@ public class MonIHM extends JFrame implements Observable, Observer{
 	private JButton boutonOutilStop;
 	private JButton boutonOutilPause;
 	private JButton boutonOutilHelp;
-	
-	
+	Font police; 
+
+
 
 
 
@@ -173,7 +175,7 @@ public class MonIHM extends JFrame implements Observable, Observer{
 		barreOutils.add(boutonOutilZoomOut);
 		barreOutils.add(boutonOutilZoomIn);
 		barreOutils.add(boutonOutilHelp);
-		
+
 
 
 
@@ -183,13 +185,15 @@ public class MonIHM extends JFrame implements Observable, Observer{
 
 		//Ajout au panneau
 		panneauPrincipal.setLayout(new BorderLayout());
-		zoneDeSaisie.setLineWrap(true);  //Aller automatiquement à la ligne
-		zoneDeNotification.setLineWrap(true);
-		zoneDeNotification.setBackground(Color.LIGHT_GRAY);
+		this.getZoneDeSaisie().setLineWrap(true);  //Aller automatiquement à la ligne
+		this.getZoneDeNotification().setLineWrap(true);
+		this.getZoneDeNotification().setEditable(false);
+		this.getZoneDeNotification().setBackground(Color.LIGHT_GRAY);
 
 		if(!publique)panneauPrincipal.add(barreOutils,BorderLayout.NORTH);
-		panneauPrincipal.add(zoneDeSaisie,BorderLayout.CENTER);
-		panneauPrincipal.add(zoneDeNotification,BorderLayout.SOUTH);
+		panneauPrincipal.add(new JScrollPane(zoneDeSaisie),BorderLayout.CENTER);
+		panneauPrincipal.add(new JScrollPane(zoneDeNotification),BorderLayout.SOUTH);
+
 
 
 
@@ -328,6 +332,7 @@ public class MonIHM extends JFrame implements Observable, Observer{
 		debut_selection=0;
 		fin_selection=0;
 		presse_papier="";
+		tailleTexte=25;
 
 		barre_de_menu=new JMenuBar();
 		menuFichier=new JMenu("Fichier");
@@ -340,6 +345,7 @@ public class MonIHM extends JFrame implements Observable, Observer{
 		menuFermer=new JMenuItem("Fermer");
 		menuSelectionnerTout=new JMenuItem(" Tout selectionner");
 		menuEnregistrer=new JMenuItem("Enregistrer");
+		police=new Font("Arial", Font.BOLD, tailleTexte);
 
 		boutonOutilCopier=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\copy.png"));
 		boutonOutilCouper=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\cut.png"));
@@ -356,8 +362,9 @@ public class MonIHM extends JFrame implements Observable, Observer{
 		boutonOutilHelp=new JButton(new ImageIcon("C:\\Users\\Melaine\\workspace\\M1_ACO_TP_Editeur\\src\\help.png"));
 
 
-		zoneDeSaisie = new JTextArea("",10,10);
+		zoneDeSaisie = new JTextArea("");
 		zoneDeNotification=new JTextArea("",15,1);
+		getZoneDeSaisie().setFont(police);
 
 
 	}
@@ -410,8 +417,6 @@ public class MonIHM extends JFrame implements Observable, Observer{
 
 			@Override
 			public void keyTyped(KeyEvent e) {}
-
-
 		});
 
 		//CARET LISTENER
@@ -436,8 +441,6 @@ public class MonIHM extends JFrame implements Observable, Observer{
 		});
 
 
-
-
 		//ACTION LISTENER
 		//Gestion des evenements liés au clic
 		//dans le menu ou sur la page
@@ -451,44 +454,96 @@ public class MonIHM extends JFrame implements Observable, Observer{
 		});
 
 
+		//Définition des evenements
 
-		this.getMenuCopier().addActionListener(new ActionListener() {
+		//Copier
+		ActionListener eventCopier=new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent a) {
 				copier.execute();
 			}
-		});
+		};
 
 
-		this.getMenuCouper().addActionListener(new ActionListener() {
+		//Couper
+		ActionListener eventCouper=new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent a) {
 				couper.execute();
 			}
-		});
+		};
 
-		this.getMenuColler().addActionListener(new ActionListener() {
+
+		ActionListener eventColler=new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent a) {
 				coller.execute();
 			}
-		});
+		};
 
 
-
-
-		this.getMenuSelectionnerTout().addActionListener(new ActionListener() {
+		ActionListener eventSelectionner=new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent a) {
 				selectionner.execute();
 			}
-		});
+		};
+		
+		ActionListener eventZoomIn=new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tailleTexte+=5;
+				police=new Font("Arial", Font.BOLD, tailleTexte);
+				getZoneDeSaisie().setFont(police);
+				System.out.println(tailleTexte);
+			}
+			
+		};
+		
+		
+		ActionListener eventZoomOut=new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tailleTexte-=5;
+				police=new Font("Arial", Font.BOLD, tailleTexte);
+				getZoneDeSaisie().setFont(police);
+				System.out.println(tailleTexte);
+			}
+			
+		};
+		
+		
+		/*
+		ActionListener event=new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			
+		};
+		*/
 
 
+
+		this.getMenuCopier().addActionListener(eventCopier);
+		this.boutonOutilCopier.addActionListener(eventCopier);
+
+		this.getMenuCouper().addActionListener(eventCouper);
+		this.boutonOutilCouper.addActionListener(eventCouper);
+
+		this.getMenuColler().addActionListener(eventColler);
+		this.boutonOutilColler.addActionListener(eventColler);
+
+		this.getMenuSelectionnerTout().addActionListener(eventSelectionner);
+		this.boutonOutilZoomIn.addActionListener(eventZoomIn);
+		this.boutonOutilZoomOut.addActionListener(eventZoomOut);
 
 
 	}
@@ -507,10 +562,7 @@ public class MonIHM extends JFrame implements Observable, Observer{
 		this.fin_selection=fin_selection;
 		this.presse_papier=presse_papier;
 
-		//SwingUtilities.invokeLater(updateIHM);
 		this.getZoneDeSaisie().setText(buffer);
-		this.getZoneDeSaisie().setCaretPosition(debut_selection);
-		this.getZoneDeSaisie().select(debut_selection, fin_selection);
 
 		//Update notification zone
 		this.getZoneDeNotification().setText(
@@ -518,6 +570,11 @@ public class MonIHM extends JFrame implements Observable, Observer{
 				details2+this.getZoneDeSaisie().getText()+"\n"+
 				details3+debut_selection+"\n"+
 				details4+fin_selection+"\n");
+
+		this.getZoneDeSaisie().setCaretPosition(debut_selection);
+		this.getZoneDeSaisie().requestFocus();
+		this.getZoneDeSaisie().select(debut_selection, fin_selection);
+
 
 
 		//this.enableDesable();

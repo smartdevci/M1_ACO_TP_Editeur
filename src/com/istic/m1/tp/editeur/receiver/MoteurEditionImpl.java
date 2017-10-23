@@ -61,11 +61,15 @@ public class MoteurEditionImpl implements MoteurEdition, Observer, Observable {
 
 	@Override
 	public void coller() {
-		buffer.getStringBuffer().delete(selection.getDebut(), selection.getFin());
-		insererTexte(presse_papier.getPressePapier());
-		selection.setDebut(selection.getDebut()+presse_papier.getPressePapier().length());
-		selection.setFin(selection.getDebut());
+		if(presse_papier.getPressePapier()!="")
+		{
+			buffer.getStringBuffer().delete(selection.getDebut(), selection.getFin());
+			insererTexte(presse_papier.getPressePapier());
+			selection.setDebut(selection.getDebut()+presse_papier.getPressePapier().length());
+			selection.setFin(selection.getDebut());
+		}
 		notifyAllObserver(this.selection.getDebut(),this.selection.getFin(), this.presse_papier.getPressePapier(), this.buffer.getText());
+		
 	}
 
 	@Override
@@ -75,7 +79,6 @@ public class MoteurEditionImpl implements MoteurEdition, Observer, Observable {
 		{
 			presse_papier.setPressePapier(buffer.getText().substring(selection.getDebut(), selection.getFin()));
 			notifyAllObserver(this.selection.getDebut(),this.selection.getFin(), this.presse_papier.getPressePapier(), this.buffer.getText());
-
 		}
 
 	}
