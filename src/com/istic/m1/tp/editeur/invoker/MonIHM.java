@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -36,7 +37,7 @@ public class MonIHM extends JFrame implements Observable, Observer{
 	private static final String details2="BUFFER : ";
 	private static final String details3="DEBUT SELECTION : ";
 	private static final String details4="FIN SELECTION : ";
-	
+
 	private int tailleTexte;
 	public boolean publique=false;
 
@@ -86,7 +87,7 @@ public class MonIHM extends JFrame implements Observable, Observer{
 	private JButton boutonOutilStop;
 	private JButton boutonOutilPause;
 	private JButton boutonOutilHelp;
-	Font police; 
+	Font police;
 
 
 
@@ -121,6 +122,11 @@ public class MonIHM extends JFrame implements Observable, Observer{
 		this.initialize();
 		this.ajouterEvenement();
 
+		getZoneDeSaisie().setFont(police);
+
+		getMenuFichier().setMnemonic('F');
+		getMenuEdition().setMnemonic('E');
+		menuCopier.setAccelerator(KeyStroke.getKeyStroke(Character.valueOf('a'),InputEvent.CTRL_DOWN_MASK));
 		menuCopier.setMnemonic(KeyEvent.VK_C);
 		menuCouper.setMnemonic(KeyEvent.VK_X);
 		menuColler.setMnemonic(KeyEvent.VK_V);
@@ -364,7 +370,7 @@ public class MonIHM extends JFrame implements Observable, Observer{
 
 		zoneDeSaisie = new JTextArea("");
 		zoneDeNotification=new JTextArea("",15,1);
-		getZoneDeSaisie().setFont(police);
+
 
 
 	}
@@ -492,7 +498,7 @@ public class MonIHM extends JFrame implements Observable, Observer{
 				selectionner.execute();
 			}
 		};
-		
+
 		ActionListener eventZoomIn=new ActionListener(){
 
 			@Override
@@ -502,10 +508,10 @@ public class MonIHM extends JFrame implements Observable, Observer{
 				getZoneDeSaisie().setFont(police);
 				System.out.println(tailleTexte);
 			}
-			
+
 		};
-		
-		
+
+
 		ActionListener eventZoomOut=new ActionListener(){
 
 			@Override
@@ -515,18 +521,18 @@ public class MonIHM extends JFrame implements Observable, Observer{
 				getZoneDeSaisie().setFont(police);
 				System.out.println(tailleTexte);
 			}
-			
+
 		};
-		
-		
+
+
 		/*
 		ActionListener event=new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
-			
+
 		};
 		*/
 
